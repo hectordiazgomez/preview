@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 const Main = () => {
-    const [mainColor, setMainColor] = useState('#ff0000');
+    const [mainColor, setMainColor] = useState('#0062ff');
     const [gradientDirection, setGradientDirection] = useState('to bottom');
     const [intensity, setIntensity] = useState(50);
     const [image, setImage] = useState(null);
@@ -133,8 +133,12 @@ const Main = () => {
             return;
         }
 
-        canvas.width = preview.offsetWidth;
-        canvas.height = preview.offsetHeight;
+        const scaleFactor = window.devicePixelRatio || 1;
+        const scaledWidth = preview.offsetWidth * scaleFactor;
+        const scaledHeight = preview.offsetHeight * scaleFactor;
+
+        canvas.width = scaledWidth;
+        canvas.height = scaledHeight;
 
         const gradient = ctx.createLinearGradient(0, 0,
             gradientDirection.includes('right') ? canvas.width : 0,
@@ -184,7 +188,7 @@ const Main = () => {
             link.href = url;
             link.click();
             URL.revokeObjectURL(url);
-        });
+        }, 'image/png', 1);
     };
 
     return (
